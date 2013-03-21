@@ -1,4 +1,4 @@
-.htaccess
+#WordPress
 wp-config.php
 wp-content/uploads/
 wp-content/blogs.dir/
@@ -6,9 +6,29 @@ wp-content/upgrade/
 wp-content/backup-db/
 wp-content/advanced-cache.php
 wp-content/wp-cache-config.php
-sitemap.xml
-*.log
 wp-content/cache/
 wp-content/backups/
+
+# ENVIRONMENT
+*.log
+*.pyc
+*.rbc
+*.swo
+*.swp
+.buildpath
+.DS_Store
+.localized
+.project
+.settings
+nbproject*
+Thumbs.db
+
+# PROJECT
+*.sublime-*
+.htaccess
+robots.txt
 sitemap.xml
 sitemap.xml.gz
+
+# CSS
+.sass-cache

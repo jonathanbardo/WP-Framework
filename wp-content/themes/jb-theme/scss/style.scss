@@ -1,0 +1,43 @@
+/*!
+Theme Name:		Project
+Theme URI:		http://www.jonathanbardo.com
+Description:	Custom client theme.
+Version:		20120420
+Author:			Jonathan Bardo
+Author URI:		http://www.jonathanbardo.com
+Tags:			Jonathan Bardo
+Text Domain: 	jb
+*/
+
+/*
+* This is the main style sheet.
+* It defines most of the style, grouped by sections, except for the layout and content paragraphs.
+* As a rule of thumb, never declare anything in this file unless it starts by a body class or a container from layout.css.
+*/
+
+// --- var & mixins
+@import "core-var.scss";
+@import "core-mixins.scss";
+
+// --- reset css
+@import "reset.scss";
+
+// --- main styles
+@import "style-main.scss";
+
+// --- media queries
+@media ( max-width : 767px ){
+	@import "responsive-lt-768.scss";
+}
+@media ( min-width: 768px ){
+	@import "responsive-768-1440.scss";
+}
+@media ( min-width: 1441px ){
+	@import "responsive-gt-1440.scss";
+}
+
+// --- modules 
+@import "module.scss";
+
+// --- wysiwyg content style
+@import "content.scss";
