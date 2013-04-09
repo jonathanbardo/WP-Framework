@@ -42,8 +42,8 @@ abstract class Metabox{
 				array( 
 					'id' => 'input32', 
 					'name' => 'Color', 
-					'type' => 'colorpicker', 
-					'repeatable' => true
+					'type' => 'wysiwyg', 
+					// 'repeatable' => true
 				),
 				array( 
 					'id' => 'input2', 
