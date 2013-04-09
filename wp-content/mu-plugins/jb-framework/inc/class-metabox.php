@@ -4,15 +4,14 @@
 //--------------------------------------------------------------------------
 Namespace JB\Framework;
 
-if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {	// check for direct file access
-	header('Location: /');						// redirect to website root
-	die();										// kill the page if the redirection fails
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
+	header( 'Location: /' );						// redirect to website root
+	exit();											// kill the page if the redirection fails
 }
 
 //--------------------------------------------------------------------------
 // Functions and definitions for: WordPress Custom Metaboxes
 //--------------------------------------------------------------------------
-
 abstract class Metabox{
 
 	const PREFIX = 'JB_';
@@ -20,14 +19,13 @@ abstract class Metabox{
     function __construct(){
     	// Trigger metabox creation
     	//----------------------------
-    	if(is_admin())
-	        $this->metaboxes();
+	    add_filter( 'cmb_meta_boxes', array($this, 'metaboxes') );
     }
 
     //--------------------------------------------------------------------------
     // Create specific function for meta
     //--------------------------------------------------------------------------
-    public function metaboxes(array $meta_boxes = array()){
+    public function metaboxes ( array $meta_boxes = array() ) {
 		$meta_boxes[] = array(
 			'title' => 'Test Meta Box',
 			'pages' => 'post',
@@ -55,18 +53,37 @@ abstract class Metabox{
 					'repeatable' => true, 
 					'disabled' => true 
 				),
-				array( 'id' => 'input3', 'name' => 'URL Text Field', 'type' => 'url', 'cols' => 8 ),
-				array( 'id' => 'group-1', 'name' => 'Group of Fields (repeatable)', 'type' => 'group', 'style' => 'background: #f1f1f1; border-radius: 4px; border: 1px solid #e2e2e2; margin-bottom: 10px; padding: 10px', 'repeatable' => true, 'fields' => array(
-						array( 'id' => 'input3-1', 'name' => 'Image', 'type' => 'file', 'cols' => 4, 'size' => 'width=200&height=120' ),
-						array( 'id' => 'input33', 'name' => 'Color', 'type' => 'colorpicker'),
+				array( 
+					'id' => 'input3', 
+					'name' => 'URL Text Field', 
+					'type' => 'url', 'cols' => 8 
+					),
+				array( 
+					'id' => 'group-1', 
+					'name' => 'Group of Fields (repeatable)', 
+					'type' => 'group', 
+					'style' => 'background: #f1f1f1; border-radius: 4px; border: 1px solid #e2e2e2; margin-bottom: 10px; padding: 10px', 
+					'repeatable' => true, 
+					'fields' => array(
+						array( 
+							'id' => 'input3-1', 
+							'name' => 'Image', 
+							'type' => 'file', 
+							'cols' => 4, 
+							'size' => 'width=200&height=120' 
+						),
+						array( 
+							'id' => 'input33', 
+							'name' => 'Color', 
+							'type' => 'colorpicker'
+						),
 					) 
 				)
 
 			)
 		);
 
-    	foreach($meta_boxes as $meta_box)
-    		$my_box = new \CMB_Meta_Box($meta_box);
+    	return $meta_boxes;
     }
 
 }  

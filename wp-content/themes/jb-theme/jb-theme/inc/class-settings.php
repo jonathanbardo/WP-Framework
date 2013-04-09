@@ -5,9 +5,9 @@
 Namespace JB\Theme;
 use JB\Project\Settings as Project_Settings;
 
-if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {	// check for direct file access
-	header('Location: /');						// redirect to website root
-	die();										// kill the page if the redirection fails
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
+	header( 'Location: /' );						// redirect to website root
+	exit;											// kill the page if the redirection fails
 }
 
 //--------------------------------------------------------------------------
@@ -15,7 +15,7 @@ if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {	// check for direct file access
 //--------------------------------------------------------------------------
 class Settings extends Project_Settings{
 
-	function __construct(){
+	function __construct() {
 		parent::__construct();
 	}
 
@@ -26,7 +26,7 @@ class Settings extends Project_Settings{
 
 		$settings_fields = array();
 
-		parent::settings((array) $settings_fields);
+		parent::settings( (array) $settings_fields );
 	}
 
 

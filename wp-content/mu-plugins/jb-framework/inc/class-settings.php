@@ -4,9 +4,9 @@
 //--------------------------------------------------------------------------
 Namespace JB\Framework;
 
-if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {	// check for direct file access
-	header('Location: /');						// redirect to website root
-	die();										// kill the page if the redirection fails
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
+	header( 'Location: /' );						// redirect to website root
+	exit();											// kill the page if the redirection fails
 }
 
 //--------------------------------------------------------------------------
@@ -16,25 +16,26 @@ if ($_SERVER['SCRIPT_FILENAME'] == __FILE__) {	// check for direct file access
 // 
 //
 //
-
 abstract class Settings {
 
-	function __construct(){
+	function __construct() {
 		//Framwork specific actions
-		add_action('admin_init', 							array($this,'settings'));
-		add_action('admin_menu', 							array($this,'admin_add_page'));
+		//----------------------------
+		add_action( 'admin_init', 								array($this,'settings') );
+		add_action( 'admin_menu', 								array($this,'admin_add_page') );
 
 		//Framework specific filters
-		add_filter('pre_update_option_category_base',		array($this,'base_options_permalink'),	1);
-		add_filter('pre_update_option_tag_base',			array($this,'base_options_permalink'),	1);
-		add_filter('pre_update_option_permalink_structure',	array($this,'base_options_permalink'),	1);
-		add_filter('init', 									array($this,'rewrites'));
+		//----------------------------
+		add_filter( 'pre_update_option_category_base',			array($this,'base_options_permalink'), 1 );
+		add_filter( 'pre_update_option_tag_base',				array($this,'base_options_permalink'), 1 );
+		add_filter( 'pre_update_option_permalink_structure',	array($this,'base_options_permalink'), 1 );
+		add_filter( 'init', 									array($this,'rewrites') );
 	}
 
 	//--------------------------------------------------------------------------
 	// Remove the /blog in the permalink structure
 	//--------------------------------------------------------------------------
-	public function base_options_permalink($permalink){
+	public function base_options_permalink($permalink) {
 		$permalink = preg_replace("/^\/blog\//","/",$permalink);
 		return $permalink;
 	}
@@ -42,22 +43,22 @@ abstract class Settings {
 	//--------------------------------------------------------------------------
 	// Change the author rewrite rule | specify our own base for author archives
 	//--------------------------------------------------------------------------
-	public function rewrites(){
+	public function rewrites() {
 		global $wp_rewrite;
-		$wp_rewrite->author_base = get_option('jb_base_author', 'author');
+		$wp_rewrite->author_base = get_option( 'jb_base_author', 'author' );
 	}
 
 	//--------------------------------------------------------------------------
 	// Settings API
 	//--------------------------------------------------------------------------
 	// We create a settings page where all those options are regroup
-	public function settings(array $settings_fields = array()) {
+	public function settings( array $settings_fields = array() ) {
 		//--------------------------------------------------------------------------
 		// Why Permalink rewrite here ? We cannot put them on the permalink page
 		//--------------------------------------------------------------------------
 		// see : http://core.trac.wordpress.org/ticket/9296
-		add_settings_section('jb_general', __('General', 'jb'), '', 'jb_settings');
-		add_settings_section('jb_wp_permalinks', __('Advanced permalinks', 'jb'), '', 'jb_settings');
+		add_settings_section( 'jb_general', __('General', 'jb'), '', 'jb_settings' );
+		add_settings_section( 'jb_wp_permalinks', __('Advanced permalinks', 'jb'), '', 'jb_settings' );
 
 		//See http://codex.wordpress.org/Function_Reference/add_settings_field
 		$framework_settings_fields = array(
@@ -91,12 +92,12 @@ abstract class Settings {
 		);
 		
 		//We simplify the settings section
-		$this->construct_settings_fields($framework_settings_fields + $settings_fields);
+		$this->construct_settings_fields( $framework_settings_fields + $settings_fields );
 
 	}
 
-	private function construct_settings_fields(array $settings_fields){
-		foreach ($settings_fields as $field):
+	private function construct_settings_fields( array $settings_fields ) {
+		foreach( $settings_fields as $field ){
 			add_settings_field(
 				$field['id'],
 				$field['title'],
@@ -106,10 +107,10 @@ abstract class Settings {
 				$field['args']
 			);
 			register_setting($field['page'], $field['id'], $field['sanitize_reg_callback']);
-		endforeach;
+		}
 	}
 
-	public function option_form_render($args) {
+	public function option_form_render( $args ) {
 		echo '<input name="'.$args['id'].'" id="'.$args['id'].'" type="text" value="' . get_option($args['id'], $args['default']) . '" class="regular-text" />';
 	}
 
@@ -117,11 +118,11 @@ abstract class Settings {
 	// Add Theme Settings page
 	//--------------------------------------------------------------------------
 	public function admin_add_page() {
-		add_options_page(__('Theme Settings', 'jb'), __('Theme Settings', 'jb'), 'manage_options', 'jb_settings', array($this,'options_page'));
+		add_options_page( __( 'Theme Settings', 'jb' ), __( 'Theme Settings', 'jb' ), 'manage_options', 'jb_settings', array($this,'options_page') );
 	}
 
-	public function options_page(){
-		if(isset($_GET['settings-updated']) && $_GET['settings-updated'] && isset($_GET['page']) && $_GET['page'] == 'jb_settings')
+	public function options_page() {
+		if( isset($_GET['settings-updated'] ) && $_GET['settings-updated'] && isset( $_GET['page'] ) && $_GET['page'] == 'jb_settings' )
 				flush_rewrite_rules();
 		?>
 		<div class="wrap">
