@@ -48,10 +48,10 @@ abstract class Metabox{
 				array( 
 					'id' => 'input2', 
 					'name' => 'Test Repeatable Field', 
-					'type' => 'text', 
+					'type' => 'post_select', 
 					'cols' => 4, 
 					'repeatable' => true, 
-					'disabled' => true 
+					'disabled' => false 
 				),
 				array( 
 					'id' => 'input3', 
@@ -62,6 +62,7 @@ abstract class Metabox{
 					'id' => 'group-1', 
 					'name' => 'Group of Fields (repeatable)', 
 					'type' => 'group', 
+					'desc'	=> 'test',
 					'style' => 'background: #f1f1f1; border-radius: 4px; border: 1px solid #e2e2e2; margin-bottom: 10px; padding: 10px', 
 					'repeatable' => true, 
 					'fields' => array(
