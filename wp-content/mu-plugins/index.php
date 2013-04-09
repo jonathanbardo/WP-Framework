@@ -13,6 +13,7 @@ define('MU_PLUGIN_DIR', dirname(__FILE__));
 // Debug
 //--------------------------------------------------------------------------
 if (WP_DEBUG):
+	require_once('jb-debug/jb-debug.php'); //Intelligent debugging
 	require_once('debug-bar/debug-bar.php'); // Debug Bar - http://wordpress.org/extend/plugins/debug-bar/
 	require_once('debug-bar-extender/debug-bar-extender.php');
 endif;

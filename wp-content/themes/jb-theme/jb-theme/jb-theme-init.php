@@ -13,16 +13,14 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 //--------------------------------------------------------------------------
 // Theme Init
 //--------------------------------------------------------------------------
-//
-// 
-//
-//
-
 class Init extends Project_Init{
 
 	function __construct(){
 		parent::__construct();
 
+		//Instanciate every class needed
+		//----------------------------
+		new Post_Types();
 		new Multilingual();
 		new Admin();
 		new Front_End();
@@ -33,6 +31,7 @@ class Init extends Project_Init{
 		new Update();
 		new Social();
 		new Shortcodes();
+		new Post();
 
 		//Theme specific actions
 		//----------------------------

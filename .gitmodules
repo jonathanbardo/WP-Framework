@@ -1,3 +1,9 @@
 [submodule "wp-content/plugins/Multisite-Language-Switcher"]
 	path = wp-content/plugins/Multisite-Language-Switcher
 	url = git@github.com:lloc/Multisite-Language-Switcher.git
+[submodule "wp-content/mu-plugins/custom-metaboxes"]
+	path = wp-content/mu-plugins/custom-metaboxes
+	url = git@github.com:jonathanbardo/custom-metaboxes.git
+[submodule "wp-content/plugins/cms-page-order"]
+	path = wp-content/plugins/cms-page-order
+	url = git@github.com:billerickson/cms-page-order.git
