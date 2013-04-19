@@ -16,7 +16,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 *
 * See: http://codex.wordpress.org/Shortcode_API
 */
-class Shortcodes {
+abstract class Shortcodes {
 
 	//We initialize the shortcode plugin button name here 
 	const BUTTON_NAME = 'jb_shortcode_selector';

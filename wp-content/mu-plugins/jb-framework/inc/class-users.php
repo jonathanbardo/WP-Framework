@@ -13,7 +13,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 //--------------------------------------------------------------------------
 // Users class
 //--------------------------------------------------------------------------
-class Users {
+abstract class Users {
 
 	function __construct() {
 		

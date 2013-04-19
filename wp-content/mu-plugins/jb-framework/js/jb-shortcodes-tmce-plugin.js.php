@@ -65,16 +65,6 @@
              }
              
              return null;
-		},
-
-		getInfo : function() {
-			return {
-				longname 	: 'TP1 Shortcode Selector',
-				author 		: 'tp1',
-				authorurl 	: 'www.tp1.ca',
-				infourl 	: '',
-				version 	: "0.1"
-			};
 		}
 	});
 

@@ -9,7 +9,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {    // check for direct file acc
     exit();                                         // kill the page if the redirection fails
 }
 
-class Post {
+abstract class Post {
 
 	function __construct(){
 		//Nothing here ... mostly helpers function
@@ -183,6 +183,41 @@ class Post {
 			return "#";
 	}
 
+	public static function get_category_link_by_slug($cat_slug) {
+		$cat = get_category_by_slug($cat_slug);
+		if ($cat)
+			return get_category_link($cat->term_id);
+		else
+			return "#";
+	}
+
+	//--------------------------------------------------------------------------
+	// Metadata helpers
+	//--------------------------------------------------------------------------
+	public static function get_meta($key, $page_id = null, $single = true, $filter = 'none') {
+		global $post;
+
+		if( ! isset($page_id))
+			$page_id = $post->ID;
+
+		$meta = get_post_meta( $page_id, $key, $single );
+
+		if( $filter == 'wysiwyg' && ! is_array($meta) && ! is_object($meta) )
+			return apply_filters('the_content', $meta);
+
+		return $meta;
+	}
+
+	public static function the_meta($key, $page_id = null, $single = true, $filter = 'none') {
+		$meta = self::get_meta($key, $page_id, $single, $filter);
+		if( ! is_array($meta) && ! is_object($meta) )
+			echo $meta;
+	}
+
+
+	//--------------------------------------------------------------------------
+	// Taxonomies links override
+	//--------------------------------------------------------------------------
 	public static function custom_taxonomies_terms_links() {
 		global $post, $post_id;
 		// get post by post id

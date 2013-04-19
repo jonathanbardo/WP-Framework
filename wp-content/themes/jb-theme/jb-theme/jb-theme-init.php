@@ -18,21 +18,6 @@ class Init extends Project_Init{
 	function __construct(){
 		parent::__construct();
 
-		//Instanciate every class needed
-		//----------------------------
-		new Post_Types();
-		new Multilingual();
-		new Admin();
-		new Front_End();
-		new Metabox();
-		new Settings();
-		new Widgets();
-		new Users();
-		new Update();
-		new Social();
-		new Shortcodes();
-		new Post();
-
 		//Theme specific actions
 		//----------------------------
 		//...

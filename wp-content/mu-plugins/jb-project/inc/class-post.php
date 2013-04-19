@@ -11,7 +11,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 }
 
 
-class Post extends Framework_Post{
+abstract class Post extends Framework_Post{
 
 	function __construct(){
 		parent::__construct();

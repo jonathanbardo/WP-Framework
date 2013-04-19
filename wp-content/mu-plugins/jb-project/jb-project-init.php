@@ -21,6 +21,21 @@ abstract class Init extends Framework_Init{
 	function __construct() {
 		parent::__construct();
 
+		//Instanciate every class needed
+		//----------------------------
+		new \JB\Theme\Post_Types();
+		new \JB\Theme\Multilingual();
+		new \JB\Theme\Admin();
+		new \JB\Theme\Front_End();
+		new \JB\Theme\Metabox();
+		new \JB\Theme\Settings();
+		new \JB\Theme\Widgets();
+		new \JB\Theme\Users();
+		new \JB\Theme\Update();
+		new \JB\Theme\Social();
+		new \JB\Theme\Shortcodes();
+		new \JB\Theme\Post();
+
 		// Framework specific actions
 		//----------------------------
 		add_action( 'wp_enqueue_script', array( $this, 'scripts' ) );

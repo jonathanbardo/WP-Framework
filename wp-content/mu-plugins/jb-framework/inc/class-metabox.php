@@ -50,7 +50,7 @@ abstract class Metabox{
 					'name' => 'Test Repeatable Field', 
 					'type' => 'post_select', 
 					'cols' => 4, 
-					'repeatable' => true, 
+					// 'repeatable' => true, 
 					'disabled' => false 
 				),
 				array( 
@@ -76,7 +76,7 @@ abstract class Metabox{
 						array( 
 							'id' => 'input33', 
 							'name' => 'Color', 
-							'type' => 'colorpicker'
+							'type' => 'wysiwyg'
 						),
 					) 
 				)

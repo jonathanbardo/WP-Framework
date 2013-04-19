@@ -13,7 +13,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 //--------------------------------------------------------------------------
 //  Functions and definitions for: Handling multilingual / multisite in WordPress
 //--------------------------------------------------------------------------
-class Multilingual extends Framework_Multilingual{
+abstract class Multilingual extends Framework_Multilingual{
 
     function __construct() {
         parent::__construct();
