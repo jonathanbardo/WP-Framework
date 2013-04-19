@@ -71,12 +71,13 @@ abstract class Metabox{
 							'name' => 'Image', 
 							'type' => 'file', 
 							'cols' => 4, 
-							'size' => 'width=200&height=120' 
+							'repeatable' => true, 
 						),
 						array( 
 							'id' => 'input33', 
 							'name' => 'Color', 
-							'type' => 'wysiwyg'
+							'type' => 'wysiwyg',
+							'repeatable' => true, 
 						),
 					) 
 				)

@@ -22,6 +22,7 @@ endif;
 // WordPress Plugins
 //--------------------------------------------------------------------------
 require_once('custom-metaboxes/custom-meta-boxes.php'); // Custom Metadata Plugin - https://github.com/jaredatch/Custom-Metaboxes-and-Fields-for-WordPress
+// require_once('cmb2/custom-meta-boxes.php');
 
 //--------------------------------------------------------------------------
 // Composer Required Libraries (See http://getcomposer.org/) | This is pure magic
