@@ -42,7 +42,7 @@ abstract class Metabox{
 				array( 
 					'id' => 'input32', 
 					'name' => 'Color', 
-					'type' => 'wysiwyg', 
+					'type' => 'colorpicker', 
 					// 'repeatable' => true
 				),
 				array( 
@@ -70,13 +70,21 @@ abstract class Metabox{
 							'id' => 'input3-1', 
 							'name' => 'Image', 
 							'type' => 'file', 
-							'cols' => 4, 
+							'cols' => 2, 
+							'repeatable' => true, 
+						),
+						array( 
+							'id' => 'input3-2', 
+							'name' => 'Image', 
+							'type' => 'colorpicker', 
+							'cols' => 2, 
 							'repeatable' => true, 
 						),
 						array( 
 							'id' => 'input33', 
 							'name' => 'Color', 
 							'type' => 'wysiwyg',
+							'rows'	=> 8,
 							'repeatable' => true, 
 						),
 					) 

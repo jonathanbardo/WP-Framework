@@ -26,7 +26,7 @@ abstract class Init extends Framework_Init{
 		new \JB\Theme\Post_Types();
 		new \JB\Theme\Multilingual();
 		new \JB\Theme\Admin();
-		new \JB\Theme\Front_End();
+		new \JB\Theme\Template();
 		new \JB\Theme\Metabox();
 		new \JB\Theme\Settings();
 		new \JB\Theme\Widgets();
