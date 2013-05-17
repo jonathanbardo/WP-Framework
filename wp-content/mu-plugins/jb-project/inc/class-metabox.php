@@ -17,6 +17,11 @@ abstract class Metabox extends Framework_Metabox {
 
     function __construct() {
         parent::__construct();
+
+        //Project Specific filter
+        //----------------------------
+        add_filter( 'cmb_show_on',      array($this, 'add_for_id' ), 10, 2 );
+        add_filter( 'cmb_show_on',      array($this, 'add_for_page_template' ), 10, 2 );
     }
 
     //--------------------------------------------------------------------------
@@ -43,6 +48,50 @@ abstract class Metabox extends Framework_Metabox {
         // );
 
         return $meta_boxes;
+    }
+
+    //--------------------------------------------------------------------------
+    // Override core plugin filters by our own behavior
+    //--------------------------------------------------------------------------
+    // Add for ID
+    public function add_for_id( $display, $meta_box ) {
+
+        $post_id = isset( $_GET['post'] ) ? $_GET['post'] : null;
+
+        if ( ! $post_id ) 
+            $post_id  = isset( $_POST['post_id'] ) ? $_POST['post_id'] : null;
+
+        if ( ! isset( $meta_box['show_on']['id'] ) )
+            return $display;
+
+        
+
+        // If value isn't an array, turn it into one
+        $meta_box['show_on']['id'] = ! is_array( $meta_box['show_on']['id'] ) ? array( $meta_box['show_on']['id'] ) : $meta_box['show_on']['id'];
+        
+        return in_array( $post_id, $meta_box['show_on']['id'] );
+
+    }
+
+    // Add for Page Template
+    public function add_for_page_template( $display, $meta_box ) {
+        
+        $post_id = isset( $_GET['post'] ) ? $_GET['post'] : null;
+
+        if ( ! $post_id ) 
+            $post_id  = isset( $_POST['post_id'] ) ? $_POST['post_id'] : null;
+
+        if ( ! isset( $meta_box['show_on']['page-template'] ) )
+            return $display;
+
+        // Get current template
+        $current_template = get_post_meta( $post_id, '_wp_page_template', true );
+
+        // If value isn't an array, turn it into one
+        $meta_box['show_on']['page-template'] = !is_array( $meta_box['show_on']['page-template'] ) ? array( $meta_box['show_on']['page-template'] ) : $meta_box['show_on']['page-template'];
+        
+        return in_array( $current_template, $meta_box['show_on']['page-template'] );
+
     }
 
 }  

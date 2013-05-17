@@ -65,11 +65,13 @@ abstract class Metabox{
 					'desc'	=> 'test',
 					'style' => 'background: #f1f1f1; border-radius: 4px; border: 1px solid #e2e2e2; margin-bottom: 10px; padding: 10px', 
 					'repeatable' => true, 
+					'sortable' => true,
 					'fields' => array(
 						array( 
 							'id' => 'input3-1', 
 							'name' => 'Image', 
 							'type' => 'file', 
+							'sortable' => true,
 							'cols' => 2, 
 							'repeatable' => true, 
 						),
@@ -84,9 +86,8 @@ abstract class Metabox{
 							'id' => 'input33', 
 							'name' => 'Color', 
 							'type' => 'wysiwyg',
-							'rows'	=> 8,
 							'repeatable' => true, 
-						),
+						)
 					) 
 				)
 

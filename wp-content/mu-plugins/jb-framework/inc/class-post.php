@@ -139,48 +139,24 @@ abstract class Post {
 		//We make a query to get all top level parents (hub page)
 		$args = array('post_type' => $post_type,'numberposts' => -1,'post_parent' => $post_id);
 		$children = wp_list_pluck(get_children($args), 'ID');
-
+		wp_reset_postdata();
 		return $children;
 	}
 
-	//--------------------------------------------------------------------------
-	// Trims text to a space then adds ellipses if desired
-	//--------------------------------------------------------------------------
-	//
-	// @param string $input text to trim
-	// @param int $length in characters to trim to
-	// @param bool $ellipses if ellipses (...) are to be added
-	// @param bool $strip_html if html tags are to be stripped
-	// @return string
-	//
-	public static function trim_text($input, $length, $ellipses = true, $strip_html = true) {
-	 
-	    //strip tags, if desired
-	    if ($strip_html)
-	        $input = strip_tags($input);
-	 
-	    //no need to trim, already shorter than trim length
-	    if (strlen($input) <= $length)
-	        return $input;
-	 
-	    //find last space within length
-	    $last_space = strrpos(substr($input, 0, $length), ' ');
-	    $trimmed_text = substr($input, 0, $last_space);
-	 
-	    //add ellipses (...)
-	    if ($ellipses)
-	        $trimmed_text .= '...';
-	 
-	    return $trimmed_text;
-	 
-	}
-
-	public static function get_page_link_by_slug($page_slug) {
-		$page = get_page_by_path($page_slug);
+	public static function get_page_link_by_slug($page_slug, $post_type="page") {
+		$page = get_page_by_path($page_slug, OBJECT, $post_type);
 		if ($page)
 			return get_permalink($page->ID);
 		else
 			return "#";
+	}
+
+	public static function get_page_id_by_slug($page_slug, $post_type="page") {
+		$page = get_page_by_path($page_slug, OBJECT, $post_type);
+		if ($page)
+			return $page->ID;
+		else
+			return false;
 	}
 
 	public static function get_category_link_by_slug($cat_slug) {

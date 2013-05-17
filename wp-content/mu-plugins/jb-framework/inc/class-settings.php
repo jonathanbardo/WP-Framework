@@ -64,30 +64,20 @@ abstract class Settings {
 		$framework_settings_fields = array(
 			array(
 				'id' 					=> 'jb_limit_excerpt',
-				'title'					=> '<label for="jb_limit_excerpt">'.__('Excerpt length', 'jb').'</label>', 
-				'callback'				=> array($this,'option_form_render'),
-				'page'					=> 'jb_settings',
+				'title'					=> __('Excerpt length', 'jb'), 
+				'args'					=> array('default'=>'140'),
+				'sanitize_reg_callback' => 'intval',
 				'section'				=> 'jb_general',
-				'args'					=> array('id'=>'jb_limit_excerpt', 'default'=>'140'),
-				'sanitize_reg_callback' => 'intval'
 			),
 			array(
 				'id' 					=> 'jb_base_404',
-				'title'					=> '<label for="jb_base_404">'.__('404 Error base', 'jb').'</label>', 
-				'callback'				=> array($this,'option_form_render'),
-				'page'					=> 'jb_settings',
-				'section'				=> 'jb_wp_permalinks',
-				'args'					=> array('id'=>'jb_base_404', 'default'=>'error-404'),
-				'sanitize_reg_callback' => 'sanitize_text_field'
+				'title'					=> __('404 Error base', 'jb'), 
+				'args'					=> array('default'=>'error-404'),
 			),
 			array(
 				'id' 					=> 'jb_base_author',
-				'title'					=> '<label for="jb_base_author">'.__('Author base', 'jb').'</label>', 
-				'callback'				=> array($this,'option_form_render'),
-				'page'					=> 'jb_settings',
-				'section'				=> 'jb_wp_permalinks',
-				'args'					=> array('id'=>'jb_base_author', 'default'=>'author'),
-				'sanitize_reg_callback' => 'sanitize_text_field' //Third arg from register_settings function
+				'title'					=> __('Author base', 'jb'), 
+				'args'					=> array('default'=>'author'),
 			)
 		);
 		
@@ -97,7 +87,20 @@ abstract class Settings {
 	}
 
 	private function construct_settings_fields( array $settings_fields ) {
-		foreach( $settings_fields as $field ){
+		foreach ($settings_fields as $field):
+			$defaults = array(
+				'callback'				=> array($this,'option_form_render'),
+				'page'					=> 'jb_settings',
+				'section'				=> 'jb_wp_permalinks',
+				'sanitize_reg_callback' => 'sanitize_text_field',
+				'args'					=> array('default' => '')
+			);
+
+			$field = wp_parse_args( $field, $defaults );
+			//Parsing arguments
+			$field['title'] = '<label for="'.$field['id'].'">'.$field['title'].'</label>';
+			$field['args']['id'] = $field['id'];
+
 			add_settings_field(
 				$field['id'],
 				$field['title'],
@@ -107,7 +110,7 @@ abstract class Settings {
 				$field['args']
 			);
 			register_setting($field['page'], $field['id'], $field['sanitize_reg_callback']);
-		}
+		endforeach;
 	}
 
 	public function option_form_render( $args ) {

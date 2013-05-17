@@ -97,20 +97,66 @@ abstract class Template{
     }
 
     //--------------------------------------------------------------------------
-    // Isset helper (echo the var only if isset)
+    // Trims text to a space then adds ellipses if desired
     //--------------------------------------------------------------------------
-    public static function e_isset(&$check, $alternate = false){
-        echo (isset($check)) ? $check : $alternate; 
-    }
-    public static function r_isset(&$check, $alternate = false){
-        return (isset($check)) ? $check : $alternate; 
+    //
+    // @param string $input text to trim
+    // @param int $length in characters to trim to
+    // @param bool $ellipses if ellipses (...) are to be added
+    // @param bool $strip_html if html tags are to be stripped
+    // @return string
+    //
+    public static function trim_text($input, $length, $ellipses = true, $strip_html = true) {
+     
+        //strip tags, if desired
+        if ($strip_html)
+            $input = strip_tags($input);
+     
+        //no need to trim, already shorter than trim length
+        if (strlen($input) <= $length)
+            return $input;
+     
+        //find last space within length
+        $last_space = strrpos(substr($input, 0, $length), ' ');
+        $trimmed_text = substr($input, 0, $last_space);
+     
+        //add ellipses (...)
+        if ($ellipses)
+            $trimmed_text .= '...';
+     
+        return $trimmed_text;
+     
     }
 
     //--------------------------------------------------------------------------
+    // Isset helper (echo the var only if isset)
+    //--------------------------------------------------------------------------
+    public static function e_isset(&$check, $alternate = false){
+        echo ( ! empty($check) ) ? $check : $alternate; 
+    }
+    public static function r_isset(&$check, $alternate = false){
+        return ( ! empty($check) ) ? $check : $alternate; 
+    }
+    public static function wrap_isset(&$check, $opentag = '<p>', $closingtag = '</p>') {
+        if( ! empty($check) )
+            echo $opentag.$check.$closingtag;
+        else
+            return; 
+    }
+    public static function link_wrap_isset(&$check, $insidetext = "", $opentag = '', $closingtag = '', $classes='', $id='') {
+        if( ! empty($check) )
+            echo $opentag.'<a href="'.$check.'" id="'.$id.'" class="'.$classes.'">'.$insidetext.'</a>'.$closingtag;
+        else
+            return; 
+    }
+    //--------------------------------------------------------------------------
     // Template content helper
     //--------------------------------------------------------------------------
-    public static function e_content($content) {
-        echo apply_filters('the_content', $content);
+    public static function e_content(&$content, $opentag = '', $closingtag = '') {
+        if(!empty($content))
+            echo $opentag.apply_filters('the_content', $content).$closingtag;
+        else
+            return;
     }
     
 }  
