@@ -9,6 +9,14 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {    // check for direct file acc
     exit();                                         // kill the page if the redirection fails
 }
 
+//--------------------------------------------------------------------------
+// 
+//--------------------------------------------------------------------------
+//
+// 
+//
+//
+
 abstract class Post {
 
 	function __construct(){
@@ -135,9 +143,9 @@ abstract class Post {
 		return $parents;
 	}
 
-	public static function get_post_children_id($post_type = 'page', $post_id = 0){
+	public static function get_post_children_id($post_type = 'page', $post_id = 0, $order = 'DESC', $orderby = 'post_date'){
 		//We make a query to get all top level parents (hub page)
-		$args = array('post_type' => $post_type,'numberposts' => -1,'post_parent' => $post_id);
+		$args = array('post_type' => $post_type,'post_parent' => $post_id, 'orderby' => $orderby, 'order'=>$order);
 		$children = wp_list_pluck(get_children($args), 'ID');
 		wp_reset_postdata();
 		return $children;

@@ -12,6 +12,11 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {    // check for direct file acc
 //--------------------------------------------------------------------------
 // Functions and definitions for: WordPress Administration
 //--------------------------------------------------------------------------
+//
+// 
+//
+//
+
 abstract class Template{
 
     function __construct(){
@@ -44,40 +49,35 @@ abstract class Template{
 
     // Manually apply the current class and strip other classes and IDs
     public function menu_items($items, $args) {
+        $items = preg_replace('#<li id="([a-z0-9-_]+)"#i', '<li', $items); // strip id and class from li's because it's ugly...
+                
+        $option = get_option('permalink_structure'); // check the permalink sturcture
+        if (empty($option)) // if empty, permalink structure is disable which means there is no slug in the URL
+            return $items;
+    
+        if (is_search() || $_SERVER['REQUEST_URI'] == '/') // check if home, search or anything without a permalink
+            return $items;
+            
+        $url = $_SERVER['REQUEST_URI']; 
+        if(strpos($url, "?") !== false)
+            $url = substr($url, 0, strpos($url, "?"));  
 
-    	// strip id and class from li's because it's ugly...
-    	$items = preg_replace('#<li id="([a-z0-9-_]+)"#i', '<li', $items); 
-    	
-    	// check the permalink sturcture	
-    	$option = get_option('permalink_structure'); 
-    	// if empty, permalink structure is disable which means there is no slug in the URL
-    	if (empty($option)) 
-    		return $items;
-    	
-    	// check if home, search or anything without a permalink
-    	if (is_search() || $_SERVER['REQUEST_URI'] == '/') 
-    		return $items;
-    		
-    	$url = $_SERVER['REQUEST_URI'];	
-    	if(strpos($url, "?") !== false)
-    		$url = substr($url, 0, strpos($url, "?"));	
-    	// check first directory called in the url
-    	$url = explode('/', $url); 	
+        $url = explode('/', trim($url, '/')); // check first directory called in the url
 
-    	global $blog_id;
-    	
-    	// if multisite and not main site and not subdomain install, check for what's after the second slash
-    	if (!empty($url[2]) && is_multisite() && $blog_id != 1 && get_site_option('subdomain_install', 0) == false) 
-    		$href = $url[2];
-    	elseif (!empty($url[1]))
-    		// otherwise check after the first slash
-    		$href = $url[1]; 
+        global $blog_id;
+        
+        if(!empty($url[0]) && is_multisite() && $blog_id != 1 && get_site_option('subdomain_install', 0) == false)
+            unset($url[0]);
 
-    	if (!empty($href))
-    		// apply class current if current url matches href
-    		$items = preg_replace('#'.$href.'/"#', $href . '/" class="current"', $items); 
+        if (!empty($url)){
+            $url = array_reverse($url);
+            foreach ($url as $key => $href){
+                $class = ($key==0) ? 'current':'current current-ancestor';
+                $items = preg_replace('#'.$href.'/"#', $href . '/" class="'.$class.'"', $items); // apply class current if current url matches href
+            }
+        }
 
-    	return $items;
+        return $items;
     }
  
     //--------------------------------------------------------------------------

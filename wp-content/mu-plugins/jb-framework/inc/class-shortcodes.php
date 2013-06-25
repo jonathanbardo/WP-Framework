@@ -10,16 +10,15 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 }
 
 
-/*
-* Functions and definitions for: WordPress Shortcodes
-* Introduced in WordPress 2.5 is the Shortcode API, a simple set of functions for creating macro codes for use in post content.
-*
-* See: http://codex.wordpress.org/Shortcode_API
-*/
-abstract class Shortcodes {
+//--------------------------------------------------------------------------
+// Functions and definitions for: WordPress Shortcodes
+//--------------------------------------------------------------------------
+// Introduced in WordPress 2.5 is the Shortcode API, a simple set of functions for creating macro codes for use in post content.
+// See: http://codex.wordpress.org/Shortcode_API
+//
+//
 
-	//We initialize the shortcode plugin button name here 
-	const BUTTON_NAME = 'jb_shortcode_selector';
+abstract class Shortcodes {
 
 	public static $shortcode_help = array();
 
@@ -37,12 +36,6 @@ abstract class Shortcodes {
 			'content' 	=> 'Display search query made by the user'
 		);
 
-		// Add only in Rich Editor mode
-	    if (get_user_option('rich_editing') == 'true') {
-			add_filter('mce_external_plugins', 	array($this, 'register_tmce_plugin'));
-			add_filter('mce_buttons', 			array($this, 'register_button'));
-	  	}
-
 	    //We add a screen help tab for shortcode
 	    add_action( "load-{$GLOBALS['pagenow']}", array($this, 'add_shortcode_help_tabs'), 20);
 
@@ -59,20 +52,6 @@ abstract class Shortcodes {
 	public function shortcode_search_query($atts) {
 		return get_search_query();
 	}
-
-
-	//Initialize tmce plugin
-	//----------------------------
-	public function register_button($buttons){
-		array_push($buttons, "separator", self::BUTTON_NAME);
-		return $buttons;
-	}
-	
-	public function register_tmce_plugin($plugin_array){
-		$plugin_array[self::BUTTON_NAME] = WPMU_PLUGIN_URL.'/jb-framework/js/jb-shortcodes-tmce-plugin.js.php';
-		return $plugin_array;
-	}
-
 
 	//Add help tab to display shortcode help
 	//----------------------------

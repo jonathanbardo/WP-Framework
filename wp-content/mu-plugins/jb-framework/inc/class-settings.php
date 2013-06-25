@@ -16,6 +16,7 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 // 
 //
 //
+
 abstract class Settings {
 
 	function __construct() {
