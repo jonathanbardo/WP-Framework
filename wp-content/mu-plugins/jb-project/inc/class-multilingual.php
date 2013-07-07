@@ -20,19 +20,63 @@ abstract class Multilingual extends Framework_Multilingual{
 
         // Project specific action
 		//----------------------------
-		// add_action('admin_head',    array($this,'change_msls_flag'));
+		add_action('admin_head',    array($this,'change_msls_flag'));
 
         //Theme specific filters
         //----------------------------
+        add_filter('msls_blog_collection_construct',    array($this,'msls_blog_collection'));
+        add_filter('msls_options_get_permalink',        array($this,'msls_options_get_permalink'), 10, 2);
     }
 
     //--------------------------------------------------------------------------
-	// Load project text-domain
-	//--------------------------------------------------------------------------
-	public function textdomain() {
-		parent::textdomain();
-		load_theme_textdomain('jb-project', dirname(__FILE__) . '/languages');
-	}
+    // Override default plugin behavior on blog collection 
+    //--------------------------------------------------------------------------
+    // Plugin filter : multisite language switcher
+    // The enable grouping of site inside a big multisite organization
+    private function get_blog_collection(){
+        $option = get_option('tp1_multilingual_link', 'none');
+        if($option != 'none'){
+            if($_SESSION['lang'] == 'fr_fr')
+                return array(get_current_blog_id(), get_option('tp1_multilingual_link', 1));
+            else
+                return array(get_option('tp1_multilingual_link', 1), get_current_blog_id());
+        }
+        else{
+            return false;
+        }
+    }
+
+    public function msls_blog_collection($arr){
+        $arr = array();
+
+        if($this->get_blog_collection())
+            foreach ($this->get_blog_collection() as $id)
+                $arr[$id] = get_blog_details($id);
+
+        return $arr;
+    }
+
+    //--------------------------------------------------------------------------
+    // Override custom post type archive translation page
+    //--------------------------------------------------------------------------
+    public function msls_options_get_permalink($url, $language){
+        $post_type = get_post_type();
+
+        $blogs = $this->get_blog_collection();
+        switch ($language):
+            case 'us':
+                $url = str_replace( '/'.get_blog_option($blogs[0],'tp1_base_'.$post_type).'/', '/'.get_blog_option($blogs[1], 'tp1_base_'.$post_type).'/',  $url );
+                break;
+            case 'fr_FR':
+                $url = str_replace( '/'.get_blog_option($blogs[1],'tp1_base_'.$post_type).'/', '/'.get_blog_option($blogs[0], 'tp1_base_'.$post_type).'/',  $url );
+                break;
+        endswitch;
+
+        if($url == "")
+            $url = home_url();
+
+        return $url;
+    }
 
     //--------------------------------------------------------------------------
     // Function that change the flags for language short tag
@@ -48,5 +92,13 @@ abstract class Multilingual extends Framework_Multilingual{
             </script>
         <?php
     }
+
+    //--------------------------------------------------------------------------
+	// Load project text-domain
+	//--------------------------------------------------------------------------
+	public function textdomain() {
+		parent::textdomain();
+		load_theme_textdomain('jb-project', dirname(__FILE__) . '/languages');
+	}
 
 }  

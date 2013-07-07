@@ -83,7 +83,7 @@ abstract class Settings {
 		);
 		
 		//We simplify the settings section
-		$this->construct_settings_fields( $framework_settings_fields + $settings_fields );
+		$this->construct_settings_fields( array_merge($framework_settings_fields, $settings_fields) );
 
 	}
 
