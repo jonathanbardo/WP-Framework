@@ -53,7 +53,6 @@ abstract class Init extends Framework_Init{
 	public function scripts() {
 		wp_deregister_script('jquery');
 		wp_enqueue_script('jquery', 'https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js', false, '1.9.1', false);
-
 	}
 
 }

@@ -1,6 +1,6 @@
 WP-Framework
 ============
-WordPress Framework for custom theme development  
+WordPress Framework for custom theme development  (PHP > 5.3)
   
 
 ## This framework works in 3 parts :
@@ -16,6 +16,7 @@ ___
 
 ### jb-project (mu-plugins folder)
 - Responsible for all project related function in a WordPress mulsitite installation. Normally you would declare (for example) general post-types which are the same for all website in the project (http://en.wikipedia.org/wiki/Don't_repeat_yourself).
+- Every class from the framework is instanciated here.
 
 ### jb-theme (theme/jb-theme folder)
-- Responsible for all theme related functions. Every class from the framework is instanciated here.
+- Responsible for all theme related functions.
