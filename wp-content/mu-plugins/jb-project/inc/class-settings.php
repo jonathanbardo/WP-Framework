@@ -71,16 +71,17 @@ abstract class Settings extends Framework_Settings {
 	}
 
 	public function sanitize_select_multilingual($input){
-		if($input != 'none'){
+		if($input != 'none' && !isset($GLOBALS['jb_multilingual_link'])){
 			$current_blog = get_current_blog_id();
 			$linked_blog = intval($input);
+			//Prevent recursion while update cross site option
+			$GLOBALS['jb_multilingual_link'] = true;
 			if($current_blog != $linked_blog)
 				if(get_blog_option($linked_blog, 'jb_multilingual_link') == 'none')
 					update_blog_option($linked_blog, 'jb_multilingual_link', $current_blog);
 		}
 
 		return $input;
-
 	}
 
 }
