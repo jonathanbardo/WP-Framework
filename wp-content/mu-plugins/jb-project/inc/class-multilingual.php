@@ -34,16 +34,11 @@ abstract class Multilingual extends Framework_Multilingual{
     // Plugin filter : multisite language switcher
     // The enable grouping of site inside a big multisite organization
     private function get_blog_collection(){
-        $option = get_option('tp1_multilingual_link', 'none');
-        if($option != 'none'){
-            if($_SESSION['lang'] == 'fr_fr')
-                return array(get_current_blog_id(), get_option('tp1_multilingual_link', 1));
-            else
-                return array(get_option('tp1_multilingual_link', 1), get_current_blog_id());
-        }
-        else{
+        $option = get_option('jb_multilingual_link', 'none');
+        if($option != 'none')
+            return array(get_option('jb_multilingual_link', 1), get_current_blog_id());
+        else
             return false;
-        }
     }
 
     public function msls_blog_collection($arr){
@@ -59,18 +54,13 @@ abstract class Multilingual extends Framework_Multilingual{
     //--------------------------------------------------------------------------
     // Override custom post type archive translation page
     //--------------------------------------------------------------------------
-    public function msls_options_get_permalink($url, $language){
+   public function msls_options_get_permalink($url, $language){
         $post_type = get_post_type();
 
         $blogs = $this->get_blog_collection();
-        switch ($language):
-            case 'us':
-                $url = str_replace( '/'.get_blog_option($blogs[0],'tp1_base_'.$post_type).'/', '/'.get_blog_option($blogs[1], 'tp1_base_'.$post_type).'/',  $url );
-                break;
-            case 'fr_FR':
-                $url = str_replace( '/'.get_blog_option($blogs[1],'tp1_base_'.$post_type).'/', '/'.get_blog_option($blogs[0], 'tp1_base_'.$post_type).'/',  $url );
-                break;
-        endswitch;
+
+        if($blogs !== false)
+            $url = str_replace( '/'.get_blog_option($blogs[0],'jb_base_'.$post_type).'/', '/'.get_blog_option($blogs[1], 'jb_base_'.$post_type).'/',  $url );
 
         if($url == "")
             $url = home_url();
