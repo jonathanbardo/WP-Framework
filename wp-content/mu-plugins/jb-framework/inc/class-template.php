@@ -73,7 +73,7 @@ abstract class Template{
             $url = array_reverse($url);
             foreach ($url as $key => $href){
                 $class = ($key==0) ? 'current':'current current-ancestor';
-                $items = preg_replace('#'.$href.'/"#', $href . '/" class="'.$class.'"', $items); // apply class current if current url matches href
+                $items = preg_replace('#/'.$href.'/"#', $href . '/" class="'.$class.'"', $items); // apply class current if current url matches href
             }
         }
 
