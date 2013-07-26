@@ -64,21 +64,22 @@ abstract class Settings {
 		//See http://codex.wordpress.org/Function_Reference/add_settings_field
 		$framework_settings_fields = array(
 			array(
-				'id' 					=> 'jb_limit_excerpt',
-				'title'					=> __('Excerpt length', 'jb'), 
-				'args'					=> array('default'=>'140'),
-				'sanitize_reg_callback' => 'intval',
-				'section'				=> 'jb_general',
+				'id' 													=> 'jb_limit_excerpt',
+				'title'												=> __('Excerpt length', 'jb'), 
+				'args'												=> array('default'=>'140'),
+				'sanitize_reg_callback' 			=> 'intval',
+				'section'											=> 'jb_general',
 			),
 			array(
-				'id' 					=> 'jb_base_404',
-				'title'					=> __('404 Error base', 'jb'), 
-				'args'					=> array('default'=>'error-404'),
+				'id' 													=> 'jb_base_404',
+				'title'												=> __('404 Error base', 'jb').$this->get_edit_link_by_slug('tp1_base_404'), 
+				'args'												=> array('default'=>'error-404'),
+				'sanitize_reg_callback' 			=> array($this,'validate_permalink')
 			),
 			array(
-				'id' 					=> 'jb_base_author',
-				'title'					=> __('Author base', 'jb'), 
-				'args'					=> array('default'=>'author'),
+				'id' 													=> 'jb_base_author',
+				'title'												=> __('Author base', 'jb'), 
+				'args'												=> array('default'=>'author'),
 			)
 		);
 		
@@ -117,6 +118,62 @@ abstract class Settings {
 	public function option_form_render( $args ) {
 		echo '<input name="'.$args['id'].'" id="'.$args['id'].'" type="text" value="' . get_option($args['id'], $args['default']) . '" class="regular-text" />';
 	}
+
+	//--------------------------------------------------------------------------
+	// Validate archive base slug
+	//--------------------------------------------------------------------------
+	public function validate_permalink($input){
+    $input = sanitize_text_field($input);
+    $option_key = array_search($input, $_POST);
+    $option_value = get_option($option_key);
+
+    if($input === $option_value)
+      return $input;
+
+    if($option_key !== false && $input !== ''){
+        $page = get_page_by_path($option_value, OBJECT, 'page');
+        $post_name = basename($input);
+        $title = sanitize_title($input);
+        if($page && isset($page->post_status) && $page->post_status != 'auto-draft'){
+            $page = array(
+              'ID' => $page->ID,
+              'post_name' => $post_name
+            );
+
+            $page_id = @wp_update_post($page, false);
+        }else{
+          $page = array(
+            'post_title'            => $title,
+            'post_status'           => 'publish', 
+            'post_type'             => 'page',
+            'post_name'             => $post_name,
+            'post_parent'           => 0,
+          );
+
+          $page_id = @wp_insert_post($page, false);
+        }
+
+        if(isset($page_id) && $page_id !== false){
+          $page = get_post($page_id, OBJECT);
+          return str_replace($post_name, $page->post_name, $input);
+        }
+    }
+
+    return $input;
+  }
+
+
+  protected function get_edit_link_by_slug($slug=''){
+    $option = get_option($slug);
+    if($slug === '' || $option === '')
+      return;
+
+    $page_id = JB_Post::get_page_id_by_slug($option);
+    if($page_id)
+      return '<br><a href="'.get_edit_post_link($page_id).'" style="font-size:smaller;margin-top:0px;">'.__('Edit page').'</a>';
+    else
+      return '<br><p style="color:#bc0b0b;font-size:smaller;margin-top:0px;">'.__("No page found by slug", "jb").'</p>';
+  }
 
 	//--------------------------------------------------------------------------
 	// Add Theme Settings page
