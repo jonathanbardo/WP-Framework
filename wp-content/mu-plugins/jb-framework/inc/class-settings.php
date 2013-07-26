@@ -72,7 +72,7 @@ abstract class Settings {
 			),
 			array(
 				'id' 													=> 'jb_base_404',
-				'title'												=> __('404 Error base', 'jb').$this->get_edit_link_by_slug('tp1_base_404'), 
+				'title'												=> __('404 Error base', 'jb').$this->get_edit_link_by_slug('jb_base_404'), 
 				'args'												=> array('default'=>'error-404'),
 				'sanitize_reg_callback' 			=> array($this,'validate_permalink')
 			),
@@ -168,7 +168,7 @@ abstract class Settings {
     if($slug === '' || $option === '')
       return;
 
-    $page_id = JB_Post::get_page_id_by_slug($option);
+    $page_id = Post::get_page_id_by_slug($option);
     if($page_id)
       return '<br><a href="'.get_edit_post_link($page_id).'" style="font-size:smaller;margin-top:0px;">'.__('Edit page').'</a>';
     else
