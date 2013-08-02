@@ -127,7 +127,7 @@ abstract class Settings {
     $option_key = array_search($input, $_POST);
     $option_value = get_option($option_key);
 
-    if($input === $option_value)
+    if($input === $option_value || $option_value === false)
       return $input;
 
     if($option_key !== false && $input !== ''){
