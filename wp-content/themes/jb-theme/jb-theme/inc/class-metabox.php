@@ -22,7 +22,7 @@ class Metabox extends Project_Metabox{
     //--------------------------------------------------------------------------
     // Create specific function for meta
     //--------------------------------------------------------------------------
-    public function metaboxes( ) {
+    public function metaboxes( $meta_boxes = array() ) {
     	$meta_boxes = parent::metaboxes();
 
      //    $meta_boxes[] = array(

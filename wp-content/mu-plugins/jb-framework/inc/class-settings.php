@@ -53,7 +53,7 @@ abstract class Settings {
 	// Settings API
 	//--------------------------------------------------------------------------
 	// We create a settings page where all those options are regroup
-	public function settings( array $settings_fields = array() ) {
+	public function settings( $settings_fields = array() ) {
 		//--------------------------------------------------------------------------
 		// Why Permalink rewrite here ? We cannot put them on the permalink page
 		//--------------------------------------------------------------------------
@@ -64,22 +64,22 @@ abstract class Settings {
 		//See http://codex.wordpress.org/Function_Reference/add_settings_field
 		$framework_settings_fields = array(
 			array(
-				'id' 													=> 'jb_limit_excerpt',
-				'title'												=> __('Excerpt length', 'jb'), 
-				'args'												=> array('default'=>'140'),
+				'id' 								=> 'jb_limit_excerpt',
+				'title'								=> __('Excerpt length', 'jb'), 
+				'args'								=> array('default'=>'140'),
 				'sanitize_reg_callback' 			=> 'intval',
-				'section'											=> 'jb_general',
+				'section'							=> 'jb_general',
 			),
 			array(
-				'id' 													=> 'jb_base_404',
-				'title'												=> __('404 Error base', 'jb').$this->get_edit_link_by_slug('jb_base_404'), 
-				'args'												=> array('default'=>'error-404'),
+				'id' 								=> 'jb_base_404',
+				'title'								=> __('404 Error base', 'jb').$this->get_edit_link_by_slug('jb_base_404'), 
+				'args'								=> array('default'=>'error-404'),
 				'sanitize_reg_callback' 			=> array($this,'validate_permalink')
 			),
 			array(
-				'id' 													=> 'jb_base_author',
-				'title'												=> __('Author base', 'jb'), 
-				'args'												=> array('default'=>'author'),
+				'id' 								=> 'jb_base_author',
+				'title'								=> __('Author base', 'jb'), 
+				'args'								=> array('default'=>'author'),
 			)
 		);
 		
