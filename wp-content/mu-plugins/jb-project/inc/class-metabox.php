@@ -27,7 +27,7 @@ abstract class Metabox extends Framework_Metabox {
     //--------------------------------------------------------------------------
     // Create specific function for meta
     //--------------------------------------------------------------------------
-    public function metaboxes( array $meta_boxes = array() ){
+    public function metaboxes( $meta_boxes = array() ){
         $meta_boxes = parent::metaboxes();
 
         // $meta_boxes[] = array(

@@ -171,7 +171,7 @@ abstract class Template{
 //
 class JB_Walker_Categories extends \Walker_Category {
 
-    public function start_el(&$output, $category, $depth, $args) {
+    public function start_el(&$output, $category, $depth = 0, $args = array(), $id = 0) {
         parent::start_el( $output, $category, $depth, $args );
         $find = 'cat-item-' . $category->term_id . '"';
         $replace = 'cat-' . $category->slug . '"';

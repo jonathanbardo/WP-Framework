@@ -22,11 +22,11 @@ class Settings extends Project_Settings{
 	//--------------------------------------------------------------------------
 	// Settings API
 	//--------------------------------------------------------------------------
-	public function settings() {
+	public function settings( $settings_fields = array() ) {
 
 		$settings_fields = array();
 
-		parent::settings( (array) $settings_fields );
+		parent::settings( $settings_fields );
 	}
 
 

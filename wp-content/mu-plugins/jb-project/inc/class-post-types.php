@@ -36,7 +36,7 @@ abstract class Post_Types {
     //--------------------------------------------------------------------------
     // Post Types (Don't forget to register a new settings field for the slug rewrite)
     //--------------------------------------------------------------------------
-    public function post_types(array $exceptions = array()) {
+    public function post_types() {
        //--------------------------------------------------------------------------
         // Post Type registration (project wide)
         //--------------------------------------------------------------------------

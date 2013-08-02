@@ -25,7 +25,7 @@ abstract class Metabox{
     //--------------------------------------------------------------------------
     // Create specific function for meta
     //--------------------------------------------------------------------------
-    public function metaboxes ( array $meta_boxes = array() ) {
+    public function metaboxes ( $meta_boxes = array() ) {
 		$meta_boxes[] = array(
 			'title' => 'Test Meta Box',
 			'pages' => 'post',

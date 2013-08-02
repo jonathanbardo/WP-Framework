@@ -22,7 +22,7 @@ abstract class Settings extends Framework_Settings {
 	//--------------------------------------------------------------------------
 	// Settings API
 	//--------------------------------------------------------------------------
-	public function settings( array $settings_fields = array() ) {
+	public function settings( $settings_fields = array() ) {
 
 		$project_settings_fields = array(
 			array(
