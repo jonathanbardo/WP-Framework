@@ -31,7 +31,6 @@ abstract class Settings extends Framework_Settings {
 				'section'				=> 'jb_multilingual',
 				'callback'				=> array($this,'select_multilingual_render'),
 				'args'					=> array('id'=>'jb_multilingual_link'),
-				'sanitize_reg_callback' => array($this,'sanitize_select_multilingual'),
 			),
 		);
 
@@ -68,20 +67,6 @@ abstract class Settings extends Framework_Settings {
 		    echo '<option value="'.$blog_id.'" '.$selected.'>'.$blog_title.'</option>';
 		}
 		echo '</select>';
-	}
-
-	public function sanitize_select_multilingual($input){
-		if($input != 'none' && !isset($GLOBALS['jb_multilingual_link'])){
-			$current_blog = get_current_blog_id();
-			$linked_blog = intval($input);
-			//Prevent recursion while update cross site option
-			$GLOBALS['jb_multilingual_link'] = true;
-			if($current_blog != $linked_blog)
-				if(get_blog_option($linked_blog, 'jb_multilingual_link') == 'none')
-					update_blog_option($linked_blog, 'jb_multilingual_link', $current_blog);
-		}
-
-		return $input;
 	}
 
 }
