@@ -2,12 +2,15 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Theme;
+namespace JB\Theme;
 use JB\Project\Update as Project_Update;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 class Update extends Project_Update {
@@ -20,8 +23,8 @@ class Update extends Project_Update {
 	const UPDATED_VERSION = 0;
 
 	function __construct() {
-		parent::__construct(self::UPDATED_VERSION);
-		update_option('JB_THEME_DB_VERSION', self::UPDATED_VERSION);
+		parent::__construct( self::UPDATED_VERSION );
+		update_option( 'JB_THEME_DB_VERSION', self::UPDATED_VERSION );
 	}
 
 	public function update_1(){

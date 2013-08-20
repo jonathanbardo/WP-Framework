@@ -2,12 +2,15 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Theme;
+namespace JB\Theme;
 use JB\Project\Template as Project_Template;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
@@ -15,8 +18,8 @@ if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
 //--------------------------------------------------------------------------
 class Template extends Project_Template{
 
-    function __construct() {
-        parent::__construct();
-    }
+	function __construct() {
+		parent::__construct();
+	}
 
 }  

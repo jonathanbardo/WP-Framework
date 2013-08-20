@@ -2,21 +2,24 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Theme;
+namespace JB\Theme;
 use JB\Project\Admin as Project_Admin;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
 // Functions and definitions for: WordPress Administration
 //--------------------------------------------------------------------------
-class Admin extends Project_Admin{
+class Admin extends Project_Admin {
 
-    function __construct() {
-        parent::__construct();
-    }
+	function __construct() {
+		parent::__construct();
+	}
 
 }  

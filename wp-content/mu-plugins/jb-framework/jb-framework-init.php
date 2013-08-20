@@ -2,11 +2,14 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Framework;
+namespace JB\Framework;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit();											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
@@ -23,7 +26,7 @@ abstract class Init {
 		//--------------------------------------------------------------------------
 		// Autoloading register
 		//--------------------------------------------------------------------------
-		spl_autoload_register( array($this,'autoload') );
+		spl_autoload_register( array( $this, 'autoload' ) );
 
 		// Framework specific actions
 		//----------------------------
@@ -31,7 +34,7 @@ abstract class Init {
 
 		// Framework specific filters
 		//----------------------------
-		add_filter( 'the_generator', array($this,'remove_wp_version') );
+		add_filter( 'the_generator', array( $this, 'remove_wp_version' ) );
 	}
 
 
@@ -40,9 +43,9 @@ abstract class Init {
 	//--------------------------------------------------------------------------
 	public function autoload( $classes ) {
 		$classes = explode( '\\', $classes );
-		$class = str_replace( '_', '-',strtolower( end( $classes ) ) );
+		$class   = str_replace( '_', '-',strtolower( end( $classes ) ) );
 
-		if( isset($classes[0]) && $classes[0] == 'JB' )
+		if ( isset( $classes[0] ) && $classes[0] == 'JB' )
 			switch ( $classes[1] ) {
 				case 'Framework' :
 					require_once 'inc/class-' . $class . '.php';
@@ -65,9 +68,9 @@ abstract class Init {
 	//--------------------------------------------------------------------------
 	// We don't want to show wordpress version number in the rss feed
 	//--------------------------------------------------------------------------
-    public function remove_wp_version() {
-        return '';
-    }
+	public function remove_wp_version() {
+		return '';
+	}
 
 }
 

@@ -2,12 +2,15 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Theme;
+namespace JB\Theme;
 use JB\Project\Init as Project_Init;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
@@ -35,10 +38,9 @@ class Init extends Project_Init{
 	public function scripts() {
 		parent::scripts();
 
-		wp_enqueue_style( 'style', get_bloginfo('stylesheet_directory').'/style.css' );
-		// wp_enqueue_style('print-css', get_bloginfo('stylesheet_directory').'/style-print.css', '', '1', 'print');
-		// wp_enqueue_script('project_script', get_bloginfo('stylesheet_directory').'/js/script.js', array('jquery'), '1', true);
-		
+		wp_enqueue_style( 'style', get_bloginfo( 'stylesheet_directory' ).'/style.css' );
+		// wp_enqueue_style( 'print-css', get_bloginfo( 'stylesheet_directory' ).'/style-print.css', '', '1', 'print' );
+		// wp_enqueue_script( 'project_script', get_bloginfo( 'stylesheet_directory' ).'/js/script.js', array('jquery'), '1', true );
 	}
 
 }

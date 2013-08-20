@@ -2,12 +2,15 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Project;
+namespace JB\Project;
 use JB\Framework\Shortcodes as Framework_Shortcodes;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
@@ -20,9 +23,9 @@ abstract class Shortcodes extends Framework_Shortcodes {
 
 		//We usually don't want those shortcodes
 		//----------------------------
-		remove_shortcode('wp_caption');
-		remove_shortcode('caption');
-		remove_shortcode('embed');
+		remove_shortcode( 'wp_caption' );
+		remove_shortcode( 'caption' );
+		remove_shortcode( 'embed' );
 	}
 
 }

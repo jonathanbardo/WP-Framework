@@ -1,10 +1,12 @@
 <?php
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 ?>
-
 <!DOCTYPE html>
 <!--[if lt IE 7]>	<html <?php language_attributes(); ?> class="no-js ie lte8 lte7 lte6 ie6"><![endif]-->
 <!--[if IE 7]>		<html <?php language_attributes(); ?> class="no-js ie lte8 lte7 ie7"><![endif]-->

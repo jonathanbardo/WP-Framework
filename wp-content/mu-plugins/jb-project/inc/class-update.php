@@ -2,11 +2,14 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Project;
+namespace JB\Project;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit;											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
@@ -18,17 +21,17 @@ abstract class Update {
 	const SITE_UPDATED_VERSION = 1;
 
 
-	function __construct($BLOG_VERSION = 0) {
-		if ( self::SITE_UPDATED_VERSION > (int) get_site_option('JB_PROJECT_DB_VERSION', 0) ) {
+	function __construct( $BLOG_VERSION = 0 ) {
+		if ( self::SITE_UPDATED_VERSION > (int) get_site_option( 'JB_PROJECT_DB_VERSION', 0 ) ) {
 			// Call the update functions. Previous, run functions must be commented out.
 		}
 
-		update_site_option('JB_PROJECT_DB_VERSION', self::SITE_UPDATED_VERSION);
+		update_site_option( 'JB_PROJECT_DB_VERSION', self::SITE_UPDATED_VERSION );
 
 		//--------------------------------------------------------------------------
 		// Blog options
 		//--------------------------------------------------------------------------
-		if ( $BLOG_VERSION > (int) get_option('JB_THEME_DB_VERSION', 0) ) {
+		if ( $BLOG_VERSION > (int) get_option( 'JB_THEME_DB_VERSION', 0 ) ) {
 			//--------------------------------------------------------------------------
 			// Call the update functions. Previous, run functions must be commented out.
 			//--------------------------------------------------------------------------

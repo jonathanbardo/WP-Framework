@@ -2,30 +2,33 @@
 //--------------------------------------------------------------------------
 // Namespace
 //--------------------------------------------------------------------------
-Namespace JB\Framework;
+namespace JB\Framework;
 
-if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {	// check for direct file access
-	header( 'Location: /' );						// redirect to website root
-	exit();											// kill the page if the redirection fails
+//--------------------------------------------------------------------------
+// Kill Script if direct file access
+//--------------------------------------------------------------------------
+if ( $_SERVER['SCRIPT_FILENAME'] == __FILE__ ) {
+	header( 'Location: /' );
+	exit;
 }
 
 //--------------------------------------------------------------------------
 // Functions and definitions for: WordPress Custom Metaboxes
 //--------------------------------------------------------------------------
-abstract class Metabox{
+abstract class Metabox {
 
 	const PREFIX = 'JB_';
 
-    function __construct(){
-    	// Trigger metabox creation
-    	//----------------------------
-	    add_filter( 'cmb_meta_boxes', array($this, 'metaboxes') );
-    }
+	function __construct(){
+		// Trigger metabox creation
+		//----------------------------
+		add_filter( 'cmb_meta_boxes', array( $this, 'metaboxes' ) );
+	}
 
-    //--------------------------------------------------------------------------
-    // Create specific function for meta
-    //--------------------------------------------------------------------------
-    public function metaboxes ( $meta_boxes = array() ) {
+	//--------------------------------------------------------------------------
+	// Create specific function for meta
+	//--------------------------------------------------------------------------
+	public function metaboxes( $meta_boxes = array() ) {
 		$meta_boxes[] = array(
 			'title' => 'Test Meta Box',
 			'pages' => 'post',
@@ -37,7 +40,7 @@ abstract class Metabox{
 					'id' => 'input', 
 					'name' => 'A Normal text input', 
 					'type' => 'datetime_unix', 
-					'cols' => 12 
+					'cols' => 12,
 				),
 				array( 
 					'id' => 'input32', 
@@ -51,13 +54,14 @@ abstract class Metabox{
 					'type' => 'post_select', 
 					'cols' => 4, 
 					// 'repeatable' => true, 
-					'disabled' => false 
+					'disabled' => false, 
 				),
 				array( 
 					'id' => 'input3', 
 					'name' => 'URL Text Field', 
-					'type' => 'url', 'cols' => 8 
-					),
+					'type' => 'url', 
+					'cols' => 8,
+				),
 				array( 
 					'id' => 'group-1', 
 					'name' => 'Group of Fields (repeatable)', 
@@ -87,14 +91,14 @@ abstract class Metabox{
 							'name' => 'Color', 
 							'type' => 'wysiwyg',
 							'repeatable' => true, 
-						)
-					) 
-				)
+						),
+					), 
+				),
 
 			)
 		);
 
-    	return $meta_boxes;
-    }
+		return $meta_boxes;
+	}
 
 }  

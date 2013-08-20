@@ -1,12 +1,12 @@
 /*!
-Theme Name:		Project
-Theme URI:		http://www.jonathanbardo.com
+Theme Name:		lassonde
+Theme URI:		http://www.tp1.ca
 Description:	Custom client theme.
 Version:		20120420
-Author:			Jonathan Bardo
-Author URI:		http://www.jonathanbardo.com
-Tags:			Jonathan Bardo
-Text Domain: 	jb
+Author:			TP1
+Author URI:		http://www.tp1.ca
+Tags:			TP1
+Text Domain: 	tp1
 */
 
 /*
@@ -15,29 +15,28 @@ Text Domain: 	jb
 * As a rule of thumb, never declare anything in this file unless it starts by a body class or a container from layout.css.
 */
 
-// --- var & mixins
-@import "core-var.scss";
-@import "core-mixins.scss";
+
+
 
 // --- reset css
-@import "reset.scss";
+@import "_reset.scss";
 
 // --- main styles
-@import "style-main.scss";
+@import "_style-main.scss";
 
 // --- media queries
 @media ( max-width : 767px ){
-	@import "responsive-lt-768.scss";
+	@import "_responsive-1-mobile.scss";
 }
 @media ( min-width: 768px ){
-	@import "responsive-768-1440.scss";
+	@import "_responsive-2-desktop.scss";
 }
 @media ( min-width: 1441px ){
-	@import "responsive-gt-1440.scss";
+	@import "_responsive-3-large.scss";
 }
 
 // --- modules 
-@import "module.scss";
+@import "_module.scss";
 
 // --- wysiwyg content style
-@import "content.scss";
+@import "_content.scss";
