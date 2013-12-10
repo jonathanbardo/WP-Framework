@@ -1,4 +1,4 @@
-WP-Framework (NOT maintained anymore)
+WP-Framework (Deprecated)
 ============
 WordPress Framework for custom theme development  (PHP > 5.3)
   
