@@ -459,7 +459,6 @@ class wp_xmlrpc_server extends IXR_Server {
 	 *  - 'xmlrpc' - url of xmlrpc endpoint
 	 */
 	function wp_getUsersBlogs( $args ) {
-		global $current_site;
 		// If this isn't on WPMU then just use blogger_getUsersBlogs
 		if ( !is_multisite() ) {
 			array_unshift( $args, 1 );
@@ -481,7 +480,7 @@ class wp_xmlrpc_server extends IXR_Server {
 
 		foreach ( $blogs as $blog ) {
 			// Don't include blogs that aren't hosted at this site
-			if ( $blog->site_id != $current_site->id )
+			if ( $blog->site_id != get_current_site()->id )
 				continue;
 
 			$blog_id = $blog->userblog_id;
@@ -546,6 +545,9 @@ class wp_xmlrpc_server extends IXR_Server {
 
 		if ( in_array( 'cap', $fields ) )
 			$_taxonomy['cap'] = (array) $taxonomy->cap;
+
+		if ( in_array( 'menu', $fields ) )
+			$_taxonomy['show_in_menu'] = (bool) $_taxonomy->show_in_menu;
 
 		if ( in_array( 'object_type', $fields ) )
 			$_taxonomy['object_type'] = array_unique( (array) $taxonomy->object_type );
@@ -5388,11 +5390,18 @@ class wp_xmlrpc_server extends IXR_Server {
 		// very stupid, but gives time to the 'from' server to publish !
 		sleep(1);
 
+		$remote_ip = preg_replace( '/[^0-9a-fA-F:., ]/', '', $_SERVER['REMOTE_ADDR'] );
+		$user_agent = apply_filters( 'http_headers_useragent', 'WordPress/' . $GLOBALS['wp_version'] . '; ' . get_bloginfo( 'url' ) );
+
 		// Let's check the remote site
 		$http_api_args = array(
 			'timeout' => 10,
 			'redirection' => 0,
 			'limit_response_size' => 153600, // 150 KB
+			'user-agent' => "$user_agent; verifying pingback from $remote_ip",
+			'headers' => array(
+				'X-Pingback-Forwarded-For' => $remote_ip,
+			),
 		);
 		$linea = wp_remote_retrieve_body( wp_safe_remote_get( $pagelinkedfrom, $http_api_args ) );
 
