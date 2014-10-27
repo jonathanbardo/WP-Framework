@@ -190,9 +190,8 @@ abstract class Settings {
 				flush_rewrite_rules();
 		?>
 		<div class="wrap">
-			<div class="icon32" id="icon-options-general"><br></div>
 			<h2><?php _e( 'Theme Settings', 'jb' ); ?></h2>
-			<form class="clear" action="options.php" method="post">
+			<form action="options.php" method="post">
 				<?php settings_fields( 'jb_settings' ); ?>
 				<?php do_settings_sections( 'jb_settings' ); ?>
 			 
