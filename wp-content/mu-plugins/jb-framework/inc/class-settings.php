@@ -196,9 +196,7 @@ abstract class Settings {
 				<?php settings_fields( 'jb_settings' ); ?>
 				<?php do_settings_sections( 'jb_settings' ); ?>
 			 
-				<p class="submit">
-					<input name="Submit" type="submit" class="button-primary" value="<?php esc_attr_e( 'Save Changes' ); ?>" />
-				</p>
+				<?php submit_button(); ?>
 			</form>
 		</div>
 		<?php
